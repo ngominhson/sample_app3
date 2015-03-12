@@ -1,10 +1,71 @@
-<% provide(:title, 'All users') %>
-<h1>All users</h1>
+<!DOCTYPE html>
+<html>
 
-<%= will_paginate %>
+<head>
+<style>
+table {
+    width:100%;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+table#t01 tr:nth-child(even) {
+    background-color: #eee;
+}
+table#t01 tr:nth-child(odd) {
+   background-color:#fff;
+}
+table#t01 th  {
+    background-color: black;
+    color: white;
+}
+</style>
+</head>
 
-<ul class="users">
-  <%= render @users %>
-</ul>
+<body>
 
-<%= will_paginate %>
+
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Users</h1>
+
+<table>
+  <tdead>
+    <tr>
+      <td>Name</td>
+      <td>Email</td>
+      <td>Taikhoan</td>
+      <td>Thoi Gian update</td>
+      <td>Gop Von</td>
+    </tr>
+  </tdead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.taikhoan %></td>
+        <td><%= user.updated_at %></td>>
+        <td><%= form_for(user) do |f| %>
+          <div class="field">
+            <%= f.label :taikhoan %><br>
+            <%= f.number_field :taikhoan %>
+          </div>
+          <div class="actions">
+            <%= f.submit %>
+          </div>
+        </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>  
+<%= link_to 'New User', new_user_path %>
+</body>
+</html>

@@ -14,4 +14,6 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require turbolinks
+//= require web_socket
+//= require websocket_rails/main
 //= require_tree .

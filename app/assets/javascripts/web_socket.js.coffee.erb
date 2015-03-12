@@ -1,0 +1,35 @@
+jQuery ->
+  # window.chatController = new Chat.Controller("<%= SITE_URL %>/websocket", true);
+
+window.Chat = {}
+
+class Chat.Controller
+
+  constructor: (url,useWebSockets) ->
+    @dispatcher = new WebSocketRails(url,useWebSockets)
+    console.log('connect')
+    console.log(@dispatcher)
+    @dispatcher.on_open = @subscribeChannel 
+    @bindEvents()
+
+  bindEvents: =>
+    @dispatcher.bind 'new_message', @newMessage
+    # $('#__chat_submit').on 'click', @sendMessage
+
+  newMessage: (message) =>
+    console.log('newMessage')
+
+  sendMessage: (event) =>
+    console.log('sendMessage')
+    event.preventDefault()
+    message = $('#__chat_input').text
+    @dispatcher.trigger 'new_message', {msg_body: message}
+
+  subscribeChannel: (message) =>
+    alert('Welcome to Chat Room')
+    channel = @dispatcher.subscribe('CHAT')
+    channel.bind('new_message', @channelMessage)
+
+  channelMessage: (message) =>
+    console.log('channel event received: ' + message)
+    $('#__chat_messages').find('ul').append('<li>' + message + '</li>')
