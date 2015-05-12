@@ -51,14 +51,18 @@ function WebSocketTest()
 <script>
 new Chat.Controller("<%= SOCKET_URL %>/websocket", true);
 $('#__chat_submit').click(function() {
-	/alert($('#__chat_input').val());/
-	$.ajax ({
-		url: "<%= chats_path %>",
-		method: 'POST',
-		data: {
-			msg_body: $('#__chat_input').val()
-		}
-	});
+  /alert($('#__chat_input').val());/
+  $.ajax ({
+    url: "<%= chats_path %>",
+    method: 'POST',
+    data: {
+      msg_body: $('#__chat_input').val()
+    },
+                success: function(result){
+                        $('#__chat_input').val('');
+                }
+  });
 });
+
 </script>
 
